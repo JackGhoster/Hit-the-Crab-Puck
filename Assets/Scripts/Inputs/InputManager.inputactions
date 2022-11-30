@@ -1,0 +1,106 @@
+{
+    "name": "InputManager",
+    "maps": [
+        {
+            "name": "Player1",
+            "id": "f1c1112c-ee2c-4279-b9ed-946e303b6fa7",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "ef5abaa3-63de-4ab0-8a4a-3d17380f6864",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "WS",
+                    "id": "13c61890-4362-42f5-9024-eb36632b5e98",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "5b0e2a5d-55d5-4382-9aa5-a21068a800b0",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "20678847-6071-4280-a6a3-b1017355810d",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Player2",
+            "id": "32719126-1be4-44ab-8887-54deec74ca45",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "d03632f6-7c86-4f71-b6bc-c9c694be2424",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "ARROWS",
+                    "id": "ed568299-3719-4d05-b504-5e05dfc26449",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "a57e7872-21d5-4ccf-8cc5-38ebc1198946",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "88ddf896-222e-4fb2-8509-33521fe6d896",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
