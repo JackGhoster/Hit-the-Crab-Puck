@@ -6,7 +6,7 @@ public class puck : MonoBehaviour
 {
     public Transform player;
     private Rigidbody _rb;
-    private float _speedX = 5005;
+    private float _speedX = 4000;
     private float _speedZ = 500;
 
     private float x1 = 1;

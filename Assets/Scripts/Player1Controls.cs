@@ -32,7 +32,7 @@ public class Player1Controls : MonoBehaviour
     {
         if (inputAxis == 0) return;
         var z = speed * inputAxis * time;
-        transform.Translate(0, 0, z);
+        transform.Translate(0, 0, z, Space.World);
     }
 
     private void OnEnable()
