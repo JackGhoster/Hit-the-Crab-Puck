@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     private GameObject _rightGoal;
 
     [SerializeField]
-    protected TextMeshProUGUI leftText;
+    protected TextMeshProUGUI rightPointsText;
     [SerializeField]
-    protected TextMeshProUGUI rightText;
+    protected TextMeshProUGUI leftPointsText;
 
     public string leftScoreTag = "LeftScore";
     public string rightScoreTag = "RightScore";
@@ -27,15 +27,15 @@ public class GameManager : MonoBehaviour
         currentRightScore = PlayerPrefs.GetInt(rightScoreTag);
         Debug.Log(currentLeftScore);
         Debug.Log(currentRightScore);
-        leftText.text = currentLeftScore.ToString();
-        rightText.text = currentRightScore.ToString();
+        rightPointsText.text = currentRightScore.ToString();
+        leftPointsText.text = currentLeftScore.ToString();
     }
     private void Update()
     {
         //for left text
-        OnScoreUpdated(leftScoreTag, currentLeftScore, leftText);
+        OnScoreUpdated(leftScoreTag, currentLeftScore, leftPointsText);
         //for right text
-        OnScoreUpdated(rightScoreTag, currentRightScore, rightText);
+        OnScoreUpdated(rightScoreTag, currentRightScore, rightPointsText);
     }
 
     private void OnScoreUpdated(string tag, int score, TextMeshProUGUI scoreText)

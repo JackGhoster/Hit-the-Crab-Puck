@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class puck : MonoBehaviour
+public class Puck : MonoBehaviour
 {
     public Transform player;
     private Rigidbody _rb;
