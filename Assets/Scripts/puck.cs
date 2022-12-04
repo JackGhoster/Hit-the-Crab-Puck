@@ -46,7 +46,6 @@ public class Puck : MonoBehaviour
 
         // instead I'll get the pos of collision since it works fine enough
         var colTransform = collision.transform.position;
-        Debug.Log(colTransform);
         _rb.AddForce(-colTransform.x * _speedX * Time.deltaTime, 0, colTransform.z * _speedZ * Time.deltaTime);
     }
 
