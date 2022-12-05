@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Puck : MonoBehaviour
 {
-    public Transform player;
+    [SerializeField]
+    private ParticleSystem _particleSystem;
+
     private Rigidbody _rb;
     private float _speedX = 4000;
     private float _speedZ = 500;
@@ -41,12 +43,16 @@ public class Puck : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //on collision spawn water particles
+        Instantiate(_particleSystem, this.transform.position, Quaternion.identity);
+
         //i read that contacts is bad since creates garbage, so I won't be using it
         //var colPoint = collision.contacts[0].point;
 
         // instead I'll get the pos of collision since it works fine enough
         var colTransform = collision.transform.position;
         _rb.AddForce(-colTransform.x * _speedX * Time.deltaTime, 0, colTransform.z * _speedZ * Time.deltaTime);
+
     }
 
     IEnumerator InitialThrowDelay(int seconds)
