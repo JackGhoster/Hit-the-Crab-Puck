@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         {
             scoreText.text = newScore.ToString();
             StartCoroutine(ExitSceneDelay(0.3f,sceneName));
+
         }
         else if (score < newScore)
         {
