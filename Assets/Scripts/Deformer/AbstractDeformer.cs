@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deformer : MonoBehaviour
+public abstract class AbstractDeformer : MonoBehaviour
 {
-    [SerializeField]
-    private Transform _playerTransform;
+    public Transform playerTransform;
+   
+    public Transform pModelTransform;
 
     [SerializeField]
-    private Transform _pModelTransform;
+    private float _perpendicularScaleKoefficient = 5f;
+    
+    [SerializeField]
+    private float _parallelScaleKoefficient = 1.5f;
 
-    [SerializeField]
-    private float _perpendicularScaleKoefficient;
-    [SerializeField]
-    private float _parallelScaleKoefficient;
+    private float scaleModifier = 1.5f;
 
     private Vector3 _scaleDownPerpendicularAxis;
     private Vector3 _scaleUpPerpendicularAxis;
@@ -23,33 +24,35 @@ public class Deformer : MonoBehaviour
     private Vector3 _scaleUpParallelAxis;
 
 
-    private void Awake()
+    public virtual void Awake()
     {
+        this.GetComponent<ConfigurableJoint>().connectedBody = playerTransform.gameObject.GetComponent<Rigidbody>();
+        pModelTransform = playerTransform.GetChild(0).transform;
         //getting scale of the non physic 3d model of a player
-        float scaleX = _pModelTransform.localScale.x;
-        float scaleY = _pModelTransform.localScale.y;
-        float scaleZ = _pModelTransform.localScale.z;
+        float scaleX = pModelTransform.localScale.x;
+        float scaleY = pModelTransform.localScale.y;
+        float scaleZ = pModelTransform.localScale.z;
         //setting up the scale modifiers
-        _scaleUpPerpendicularAxis = new Vector3(scaleX, scaleY * 1.5f, scaleZ);
-        _scaleDownPerpendicularAxis = new Vector3(scaleX, scaleY / 1.5f, scaleZ);
+        _scaleUpPerpendicularAxis = new Vector3(scaleX, scaleY * scaleModifier, scaleZ);
+        _scaleDownPerpendicularAxis = new Vector3(scaleX, scaleY / scaleModifier, scaleZ);
         //Debug.Log(_scaleDownPerpendicularAxis);
-        _scaleUpParallelAxis = new Vector3(scaleX * 1.5f, scaleY, scaleZ);        
+        _scaleUpParallelAxis = new Vector3(scaleX * scaleModifier, scaleY, scaleZ);        
         //_scaleDownParallelAxis = new Vector3(scaleX / 1.5f, scaleY, scaleZ);
     }
     // Update is called once per frame
     void Update()
     {
-        Vector3 relativePosition = _playerTransform.InverseTransformPoint(transform.position);
+        Vector3 relativePosition = playerTransform.InverseTransformPoint(transform.position);
         float interpolantPerpendicular = relativePosition.y * _perpendicularScaleKoefficient;
         float interpolantParallel = relativePosition.x * _parallelScaleKoefficient;
         
-        Vector3 scalePerpendicularly = Lerp3(_scaleDownPerpendicularAxis, _pModelTransform.localScale, _scaleUpPerpendicularAxis, interpolantPerpendicular);
+        Vector3 scalePerpendicularly = Lerp3(_scaleDownPerpendicularAxis, pModelTransform.localScale, _scaleUpPerpendicularAxis, interpolantPerpendicular);
         //Debug.Log(scalePerpendicularly);
-        _pModelTransform.localScale = scalePerpendicularly;
+        pModelTransform.localScale = scalePerpendicularly;
 
-        Vector3 scaleParallelary = Vector3.LerpUnclamped(_pModelTransform.localScale, _scaleUpParallelAxis, interpolantParallel);
+        Vector3 scaleParallelary = Vector3.LerpUnclamped(pModelTransform.localScale, _scaleUpParallelAxis, interpolantParallel);
         //Debug.Log(scaleParallelary);
-        _pModelTransform.localScale = scaleParallelary;
+        pModelTransform.localScale = scaleParallelary;
     }
 
     //it scales the object set in the inspector between the operands

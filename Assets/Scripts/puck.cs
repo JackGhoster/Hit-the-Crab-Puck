@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Puck : MonoBehaviour
 {
+    [HideInInspector]
+    public Vector3 startingVector = Vector3.zero;
+
     [SerializeField]
     private ParticleSystem _particleSystem;
 
@@ -14,36 +17,21 @@ public class Puck : MonoBehaviour
     private float x1 = 1;
     private float x2 = -1;
     private List<float> _randomXList = new List<float>();
-    private Vector3 _startingVector = Vector3.zero;
-    
+
 
     // Start is called before the first frame update
     private void Awake()
     {
+        _rb = GetComponent<Rigidbody>();
         //choosing where the puck will go along the x axis at the start of the round!
         _randomXList.Add(x1);
         _randomXList.Add(x2);
-        _startingVector.x = _randomXList[Random.Range(0, _randomXList.Count)];
-
-        _rb = GetComponent<Rigidbody>();
-        
-    }
-
-    private void Start()
-    {
-        //the delay of a throw at the beginning of each round
-        StartCoroutine(InitialThrowDelay(2));     
-    }
-
-    // Update is called once per frame
-    private void LateUpdate()
-    {
-        //var playerPos = player.position;          
+        startingVector.x = _randomXList[Random.Range(0, _randomXList.Count)];
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //on collision spawn water particles
+        //upon a collision spawns water particles
         Instantiate(_particleSystem, this.transform.position, Quaternion.identity);
 
         //i read that contacts is bad since creates garbage, so I won't be using it
@@ -53,11 +41,5 @@ public class Puck : MonoBehaviour
         var colTransform = collision.transform.position;
         _rb.AddForce(-colTransform.x * _speedX * Time.deltaTime, 0, colTransform.z * _speedZ * Time.deltaTime);
 
-    }
-
-    IEnumerator InitialThrowDelay(int seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        _rb.AddForce(_startingVector * 155f);
     }
 }

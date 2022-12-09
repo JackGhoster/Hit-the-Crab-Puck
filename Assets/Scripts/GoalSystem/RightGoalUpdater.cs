@@ -9,6 +9,7 @@ public class RightGoalUpdater : MonoBehaviour
     private int _currentRightScore;
     private void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>();
         _rightScoreTag = gameManager.rightScoreTag;
         _currentRightScore = PlayerPrefs.GetInt(_rightScoreTag);
     }

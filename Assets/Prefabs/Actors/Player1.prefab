@@ -94,10 +94,10 @@ GameObject:
   - component: {fileID: 6459181339735341795}
   - component: {fileID: 6784996411545804046}
   - component: {fileID: 6784996411545804045}
-  - component: {fileID: 3494844152875742018}
+  - component: {fileID: 8282076540616839343}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ CapsuleCollider:
   m_Height: 0.03573441
   m_Direction: 0
   m_Center: {x: 0, y: -0.000046641115, z: -0.00014179133}
---- !u!114 &3494844152875742018
+--- !u!114 &8282076540616839343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5974112421377335385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8de177340cc6ce4a881f0a64b735c9f, type: 3}
+  m_Script: {fileID: 11500000, guid: bc49ef9c62bfb7542ad432f18a23c9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5

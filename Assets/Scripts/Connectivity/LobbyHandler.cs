@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using TMPro;
+using Photon.Realtime;
 
 public class LobbyHandler : MonoBehaviourPunCallbacks
 {
@@ -14,10 +15,17 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
 
     private string _sceneToLoad = "OnlineScene";
 
+
     public void CreateRoom()
     {
         //Debug.Log(_createInputField.text);
-        PhotonNetwork.CreateRoom(_createInputField.text);
+        RoomOptions roomOptions = new RoomOptions()
+        {
+            IsVisible = true,
+            MaxPlayers = 2
+        };
+
+        PhotonNetwork.CreateRoom(_createInputField.text, roomOptions, TypedLobby.Default);
     }
 
     public void JoinRoom()

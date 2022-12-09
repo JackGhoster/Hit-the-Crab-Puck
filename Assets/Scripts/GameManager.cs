@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int currentLeftScore;
     public int currentRightScore;
 
+
     private void Awake()
     {
         currentLeftScore = PlayerPrefs.GetInt(leftScoreTag);

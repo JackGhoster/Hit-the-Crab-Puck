@@ -1,24 +1,31 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player1Controls : MonoBehaviour
-{
-    private InputManager _inputManager;
-
+{   
     [SerializeField]
     private float _speed = 5f;
 
-    public float moveInputFloat = 0; 
-    
+    public float moveInputFloat = 0;
 
+    private InputManager _inputManager;
+    private PhotonView _view;
     private void Awake()
     {
+        _view = GetComponent<PhotonView>();
         _inputManager = new InputManager();
     }
 
     void Update()
     {
-        Move(_speed, moveInputFloat, Time.deltaTime);
+        if(_view != null)
+        {
+            if (_view.IsMine)
+            {
+                Move(_speed, moveInputFloat, Time.deltaTime);
+            }
+        }     
     }
 
 

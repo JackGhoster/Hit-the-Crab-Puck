@@ -18,12 +18,12 @@ EditorBuildSettings:
     path: Assets/Scenes/LobbyScene.unity
     guid: 1ddcff217ef0a6845bcbc99dea7014eb
   - enabled: 1
-    path: Assets/Scenes/OnlineScene.unity
-    guid: 1a2ca0c077be56645a748d6d938dc833
-  - enabled: 1
     path: Assets/Scenes/LeftLostScene.unity
     guid: aea5745a8cf39bb4282cb557d0431722
   - enabled: 1
     path: Assets/Scenes/RightLostScene.unity
     guid: b6ac0069986e124489d19030258ed1b1
+  - enabled: 1
+    path: Assets/Scenes/OnlineScene.unity
+    guid: 5665b2377e2a874439be8f94d33189b7
   m_configObjects: {}

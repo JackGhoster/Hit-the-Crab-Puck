@@ -9,6 +9,7 @@ public class LeftGoalUpdater : MonoBehaviour
     private int _currentLeftScore;
     private void Awake()
     {
+        gameManager = FindObjectOfType<GameManager>();
         _leftScoreTag = gameManager.leftScoreTag;
         _currentLeftScore = PlayerPrefs.GetInt(_leftScoreTag);
     }
