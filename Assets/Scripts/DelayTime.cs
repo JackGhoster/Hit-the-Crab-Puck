@@ -14,7 +14,7 @@ public class DelayTime : MonoBehaviour
 
     private void Awake()
     {
-        _puck = GameObject.Find("CrabPuck");
+        _puck = GameObject.FindGameObjectWithTag("Puck");
         _rb = _puck.GetComponent<Rigidbody>();
     }
 
@@ -25,12 +25,13 @@ public class DelayTime : MonoBehaviour
 
     public void StartThrow()
     {
-        StartCoroutine(InitialThrowDelay(3));
+        StartCoroutine(InitialThrowDelay(1.5f));
     }
 
-    IEnumerator InitialThrowDelay(int seconds)
+    IEnumerator InitialThrowDelay(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         _rb.AddForce(_startingVector * 155f);
+        Debug.Log("Puck Thrown");
     }
 }

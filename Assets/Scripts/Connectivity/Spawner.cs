@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour
     private Vector3 _initialPlayer2Pos = new Vector3(4f, 0.21f, -10f);
     private Vector3 _initialPuckPos = new Vector3(0f, 0.106f, -10f);
     //and their public properties
-    public Vector3 InitialPlayer1Pos { get; private set; }
+    public Vector3 InitialPlayer1Pos { get { return _initialPlayer1Pos; } }
     public Vector3 InitialPlayer2Pos { get; private set; }
     public Vector3 InitialPuckPos { get; private set; }
 
@@ -54,7 +54,7 @@ public class Spawner : MonoBehaviour
         Player2 = _player2;
         Puck = _puck;
 
-        InitialPlayer1Pos = _initialPlayer1Pos;
+        //InitialPlayer1Pos = _initialPlayer1Pos;
         InitialPlayer2Pos = _initialPlayer2Pos;
         InitialPuckPos = _initialPuckPos;
 

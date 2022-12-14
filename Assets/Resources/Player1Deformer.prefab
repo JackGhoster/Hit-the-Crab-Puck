@@ -118,7 +118,7 @@ MonoBehaviour:
     type: 3}
   pModelTransform: {fileID: 0}
   _perpendicularScaleKoefficient: 5
-  _parallelScaleKoefficient: 1.5
+  _parallelScaleKoefficient: 0
 --- !u!54 &7640239470799666876
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ZDrive:
     serializedVersion: 3
-    positionSpring: 500
+    positionSpring: 1000
     positionDamper: 0.5
     maximumForce: 3.4028233e+38
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
