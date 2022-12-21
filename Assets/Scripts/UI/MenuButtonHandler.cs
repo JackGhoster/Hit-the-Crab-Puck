@@ -4,15 +4,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuButtonHandler : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource _sfx;
+
     protected string OfflineSceneName = "OfflineScene";
-    protected string LoadingSceneName = "LoadingScene";
+    protected string OnlineSceneName = "LoadingScene";
     public void OnOfflineButton()
     {
-        SceneManager.LoadScene(OfflineSceneName);
+        _sfx.Play();
+        StartCoroutine(OnSoundPlayedLoad(OfflineSceneName));
+        //SceneManager.LoadScene(OfflineSceneName);
     }
 
     public void OnOnlineButton()
     {
-        SceneManager.LoadScene(LoadingSceneName);
+        _sfx.Play();
+        StartCoroutine(OnSoundPlayedLoad(OnlineSceneName));
+        //SceneManager.LoadScene(LoadingSceneName);
+    }
+
+    IEnumerator OnSoundPlayedLoad(string sceneName)
+    {
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(sceneName);
     }
 }

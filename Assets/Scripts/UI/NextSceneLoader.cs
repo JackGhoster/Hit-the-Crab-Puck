@@ -16,12 +16,12 @@ public class NextSceneLoader : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        Invoke("OfflineSceneChanger", 2.5f);
-        StartCoroutine(DisconectAfterDelay(_timeToWait));       
+        Invoke("OfflineSceneChanger", 3f);
     }
 
     private void OfflineSceneChanger()
     {
+        StartCoroutine(DisconectAfterDelay(_timeToWait));
         SceneManager.LoadScene(_sceneToLoad);
     }
 

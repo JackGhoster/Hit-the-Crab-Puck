@@ -11,6 +11,8 @@ public class RightGoalUpdater : MonoBehaviour
     public GameManager gameManager;
     private string _rightScoreTag;
     private int _currentRightScore;
+
+    private bool _ready;
     private void Awake()
     {
         _networkManager = GameObject.FindGameObjectWithTag("NetworkManager");
@@ -19,32 +21,31 @@ public class RightGoalUpdater : MonoBehaviour
         _currentRightScore = PlayerPrefs.GetInt(_rightScoreTag);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (_networkManager != null)
-        {
-            OnlineAddScore();
-        }
-        else
-        {
-            OfflineAddScore();
-        }
+        _ready = true;
     }
 
-    private void OfflineAddScore()
+    private void OnTriggerEnter(Collider other)
     {
-        _currentRightScore++;
-        PlayerPrefs.SetInt(_rightScoreTag, _currentRightScore);
-        PlayerPrefs.Save();
+        AddScore();       
     }
-    private void OnlineAddScore()
+
+    private void AddScore()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        else
+        if(_ready == true)
         {
             _currentRightScore++;
             PlayerPrefs.SetInt(_rightScoreTag, _currentRightScore);
             PlayerPrefs.Save();
+            StartCoroutine(Cooldown());
         }
+    }
+
+    IEnumerator Cooldown()
+    {
+        _ready = false;
+        yield return new WaitForSeconds(2);
+        _ready = true;
     }
 }

@@ -11,6 +11,9 @@ public class LeftGoalUpdater : MonoBehaviour
     
     private string _leftScoreTag;
     private int _currentLeftScore;
+
+    private bool _ready = true;
+
     private void Awake()
     {
         _networkManager = GameObject.FindGameObjectWithTag("NetworkManager");
@@ -19,32 +22,31 @@ public class LeftGoalUpdater : MonoBehaviour
         _currentLeftScore = PlayerPrefs.GetInt(_leftScoreTag);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if(_networkManager != null)
-        {
-            OnlineAddScore();
-        }
-        else
-        {
-            OfflineAddScore();
-        }    
+        _ready = true;
     }
 
-    private void OfflineAddScore()
+    private void OnTriggerEnter(Collider other)
     {
-        _currentLeftScore++;
-        PlayerPrefs.SetInt(_leftScoreTag, _currentLeftScore);
-        PlayerPrefs.Save();
+        AddScore();   
     }
-    private void OnlineAddScore()
+
+    private void AddScore()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        else
+        if(_ready == true)
         {
             _currentLeftScore++;
             PlayerPrefs.SetInt(_leftScoreTag, _currentLeftScore);
             PlayerPrefs.Save();
+            StartCoroutine(Cooldown());
         }
+    }
+
+    IEnumerator Cooldown()
+    {
+        _ready = false;
+        yield return new WaitForSeconds(2);
+        _ready = true;
     }
 }

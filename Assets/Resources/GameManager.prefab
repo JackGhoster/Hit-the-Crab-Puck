@@ -48,6 +48,9 @@ MonoBehaviour:
   _rightGoal: {fileID: 0}
   _networkManager: {fileID: 0}
   _puck: {fileID: 0}
+  _winParticles: {fileID: 2711950593445126184, guid: b045fe4e79fec04439de6c25c273bd3c,
+    type: 3}
+  _winSfx: {fileID: 0}
   rightPointsText: {fileID: 0}
   leftPointsText: {fileID: 0}
   leftScoreTag: LeftScore

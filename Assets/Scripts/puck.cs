@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Puck : MonoBehaviour
+public class Puck : MonoBehaviourPun
 {
+
     [HideInInspector]
     public Vector3 startingVector = Vector3.zero;
 
     [SerializeField]
     private ParticleSystem _particleSystem;
+
+    [SerializeField]
+    private AudioSource _hitSound;
 
     private Rigidbody _rb;
     private float _speedX = 4000;
@@ -34,6 +38,10 @@ public class Puck : MonoBehaviour
     {
         //upon a collision spawns water particles
         Instantiate(_particleSystem, this.transform.position, Quaternion.identity);
+        //and plays the sound
+        _hitSound.Play();
+
+        //TransferOwnership(collision);
 
         //i read that contacts is bad since creates garbage, so I won't be using it
         //var colPoint = collision.contacts[0].point;
@@ -42,5 +50,11 @@ public class Puck : MonoBehaviour
         var colTransform = collision.transform.position;
         _rb.AddForce(-colTransform.x * _speedX * Time.deltaTime, 0, colTransform.z * _speedZ * Time.deltaTime);
 
+    }
+
+    private void TransferOwnership(Collision col)
+    {
+        var ownershipTransferer = GetComponent<OwnershipTransferer>();
+        ownershipTransferer.OnCollisionRequestOwnership(col);
     }
 }

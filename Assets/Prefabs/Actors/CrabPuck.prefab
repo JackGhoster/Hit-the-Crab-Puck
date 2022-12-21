@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1478463885509100661}
   - component: {fileID: 1478463885509100660}
   - component: {fileID: 1478463885509100663}
+  - component: {fileID: 313554864}
   m_Layer: 0
   m_Name: CrabPuck
   m_TagString: Puck
@@ -162,7 +163,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingVector: {x: 0, y: 0, z: 0}
-  _particleSystem: {fileID: 0}
+  _particleSystem: {fileID: 4518337396000519422, guid: eb62d91a3151d594ba509cb8ae73160e,
+    type: 3}
+  _hitSound: {fileID: 0}
+--- !u!114 &313554864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749057759540590880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ee3058d3dcd5d4a96af3cfcbfc180f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _puck: {fileID: 1749057759540590880}
 --- !u!1 &1815462104565287555
 GameObject:
   m_ObjectHideFlags: 0

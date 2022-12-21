@@ -20,11 +20,18 @@ public class GameManager : MonoBehaviour
     private GameObject _puck;
 
     [SerializeField]
+    private ParticleSystem _winParticles;
+    private Vector3 _particlePos = new(0,0,-10);
+
+    [SerializeField]
+    private AudioSource _winSfx;
+
+    [SerializeField]
     protected TextMeshProUGUI rightPointsText;
     [SerializeField]
     protected TextMeshProUGUI leftPointsText;
 
-
+    
 
     public string leftScoreTag = "LeftScore";
     public string rightScoreTag = "RightScore";
@@ -32,8 +39,9 @@ public class GameManager : MonoBehaviour
     public int currentRightScore;
 
     private bool _matchStarted = false;
+    private bool _matchFinished = false;
     private Action OnMatchStarted;
-    private Action OnScored;
+    public Action OnScored;
     private void Awake()
     {
         currentLeftScore = PlayerPrefs.GetInt(leftScoreTag);
@@ -45,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        _matchFinished = false;
         InvokeRepeating("CheckForPlayersReady", 3, 3);
         _puck = GameObject.FindGameObjectWithTag("Puck");
     }
@@ -55,59 +63,44 @@ public class GameManager : MonoBehaviour
         UpdateScores();
     }
 
+    #region ScoreRegion
     private void UpdateScores()
     {
-        if(_networkManager == null)
-        {
-            //when the left one is getting crabed on in offline
-            OnScoreUpdated(leftScoreTag, currentLeftScore, leftPointsText, "LeftLostScene");
-            //when the right one is getting crabed on in offline
-            OnScoreUpdated(rightScoreTag, currentRightScore, rightPointsText, "RightLostScene");
-        }
-        else{
-            //when the left one is getting crabed on in online
-            OnOnlineScoreUpdated(leftScoreTag, currentLeftScore, leftPointsText, "LeftLostScene");
-            //when the right one is getting crabed on in online
-            OnOnlineScoreUpdated(rightScoreTag, currentRightScore, rightPointsText, "RightLostScene");
-        }
+        //when the left one is getting crabed on in online
+        OnScoreUpdated(leftScoreTag, currentLeftScore, leftPointsText, "LeftLostScene");
+        //when the right one is getting crabed on in online
+        OnScoreUpdated(rightScoreTag, currentRightScore, rightPointsText, "RightLostScene");
     }
 
     private void OnScoreUpdated(string tag, int score, TextMeshProUGUI scoreText, string sceneName)
-    {
-        var targetScore = 5;
-        int newScore = PlayerPrefs.GetInt(tag);
-        
-        if (newScore > targetScore - 1)
-        {
-            scoreText.text = newScore.ToString();
-            StartCoroutine(ExitSceneDelay(0.3f, sceneName));
-        }
-        else if (score < newScore)
-        {
-            scoreText.text = newScore.ToString();
-            StartCoroutine(ReloadScene(0.5f));
-        }
-    }
-
-    private void OnOnlineScoreUpdated(string tag, int score, TextMeshProUGUI scoreText, string sceneName)
     {
         var targetScore = 5;
         int newScore = 0;
         newScore = PlayerPrefs.GetInt(tag);
         if (newScore > targetScore - 1)
         {
+            if (_matchFinished == false)
+            {
+                OnScored();
+                _matchFinished = true;
+            }
             scoreText.text = newScore.ToString();
-            StartCoroutine(ExitSceneDelay(0.3f, sceneName));
+            StartCoroutine(ExitSceneDelay(1f, sceneName));
         }
         else if (score < newScore)
         {
+            if (_matchFinished == false)
+            {
+                OnScored();
+                _matchFinished = true;
+            }
             scoreText.text = newScore.ToString();
             _matchStarted = false;
-            StartCoroutine(ReloadScene(0.2f));
+            StartCoroutine(ReloadScene(1f));
         }
    
     }
-
+    #endregion
     //when there is enough players in the mp the puck will be thrown after a delay
     private void CheckForPlayersReady()
     {
@@ -134,6 +127,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //actions that happen when somebody wins!
+    #region WinActionsRegion
+    private void SpawnWinParticles()
+    {
+        if(_winParticles != null)
+        {
+            Instantiate(_winParticles, _particlePos, Quaternion.identity);
+        }
+    }
+
+    private void PlayWinSound()
+    {
+        if(_winSfx != null)
+        {
+            _winSfx.Play();
+        }         
+    }
+    #endregion
+
     //private void ResetPuck()
     //{
     //    if (_puck != null)
@@ -141,10 +153,17 @@ public class GameManager : MonoBehaviour
     //        Debug.Log("reset");
     //        var puckInitPos = _networkManager.GetComponent<NetworkManager>().StartingPuckPos;
     //        _puck.transform.position = puckInitPos;
-    //        _matchStarted = false;
+    //        _puck.transform.rotation = Quaternion.identity;
+    //        _puck.GetComponent<Rigidbody>().velocity = Vector3.zero;
     //    }
     //}
 
+    private void DestroyPuck()
+    {
+        Destroy(_puck);
+    }
+
+    #region Coroutines
     IEnumerator ReloadScene(float seconds)
     {
         yield return new WaitForSeconds(seconds);
@@ -156,16 +175,23 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         SceneManager.LoadScene(sceneToLoad);
     }
+    #endregion
 
     private void OnEnable()
     {
         OnMatchStarted += ThrowPuck;
+        OnScored += SpawnWinParticles;
+        OnScored += PlayWinSound;
+        OnScored += DestroyPuck;
         //OnScored += ResetPuck;
     }
 
     private void OnDisable()
     {
         OnMatchStarted -= ThrowPuck;
+        OnScored -= SpawnWinParticles;
+        OnScored -= PlayWinSound;
+        OnScored -= DestroyPuck;
         //OnScored -= ResetPuck;
     }
 
