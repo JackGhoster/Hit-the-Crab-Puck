@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8268252596795181913}
   - component: {fileID: 8268252596795181912}
   - component: {fileID: 8268252596795181915}
-  - component: {fileID: 8268252596795181914}
   - component: {fileID: 8268252596795181919}
+  - component: {fileID: 6951109492292778404}
   - component: {fileID: 8268252596795181918}
   - component: {fileID: 7880480291612621636}
   - component: {fileID: 2876209874982072889}
@@ -90,19 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8268252596795181914
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8268252596795181893}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8268252596795181919
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -119,6 +106,20 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &6951109492292778404
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268252596795181893}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.53
+  m_Height: 1.02
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.27, z: 0}
 --- !u!153 &8268252596795181918
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -184,7 +185,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ZDrive:
     serializedVersion: 3
-    positionSpring: 1000
+    positionSpring: 500
     positionDamper: 0.5
     maximumForce: 3.4028233e+38
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -232,7 +233,7 @@ MonoBehaviour:
     type: 3}
   pModelTransform: {fileID: 0}
   _perpendicularScaleKoefficient: 5
-  _parallelScaleKoefficient: 0
+  _parallelScaleKoefficient: 2
 --- !u!114 &2876209874982072889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,8 +274,8 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
+    InterpolateOption: 1
+    InterpolateMoveTowardsSpeed: 0.5
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1

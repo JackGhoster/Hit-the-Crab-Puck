@@ -26,20 +26,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public Vector3 StartingPuckPos { get; private set; }
     #endregion
+    private void Awake()
+    {
+        spawner.SeekAndDestroy();
+        StartCoroutine(SpawnDelay());
+        
+    }
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         StartingPuckPos = spawner.InitialPuckPos;
-        //PhotonNetwork.SetMasterClient(PhotonNetwork.CurrentRoom.GetPlayer(1));
-        spawner.SeekAndDestroy();
-        InitialSpawn();
     }
+
     private void Update()
     {
         
     }
     #region Private Methods
-    private void InitialSpawn()
+    public void InitialSpawn()
     {
         if (!PhotonNetwork.IsMasterClient)
         {
@@ -90,4 +94,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         base.OnDisconnected(cause);
     }
     #endregion
+
+    IEnumerator SpawnDelay()
+    {
+        yield return new WaitForSeconds(.75f);
+        InitialSpawn();
+    }
 }

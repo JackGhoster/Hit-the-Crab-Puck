@@ -1,15 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 using Photon.Pun;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    #region Fields
     [SerializeField]
     private GameObject _leftGoal;
     [SerializeField]
@@ -38,12 +37,17 @@ public class GameManager : MonoBehaviour
     public int currentLeftScore;
     public int currentRightScore;
 
+    private InputManager _inputManager;
+
     private bool _matchStarted = false;
     private bool _matchFinished = false;
     private Action OnMatchStarted;
     public Action OnScored;
+    #endregion
+
     private void Awake()
     {
+        _inputManager = new InputManager();
         currentLeftScore = PlayerPrefs.GetInt(leftScoreTag);
         currentRightScore = PlayerPrefs.GetInt(rightScoreTag);
         rightPointsText.text = currentRightScore.ToString();
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviour
         _matchFinished = false;
         InvokeRepeating("CheckForPlayersReady", 3, 3);
         _puck = GameObject.FindGameObjectWithTag("Puck");
+
     }
 
     private void Update()
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
         UpdateScores();
     }
 
-    #region ScoreRegion
+    #region Score Methods
     private void UpdateScores()
     {
         //when the left one is getting crabed on in online
@@ -96,11 +101,12 @@ public class GameManager : MonoBehaviour
             }
             scoreText.text = newScore.ToString();
             _matchStarted = false;
-            StartCoroutine(ReloadScene(1f));
+            StartCoroutine(ReloadScene(2.5f));           
         }
-   
+
     }
     #endregion
+
     //when there is enough players in the mp the puck will be thrown after a delay
     private void CheckForPlayersReady()
     {
@@ -117,18 +123,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ThrowPuck()
-    {
-        if (_puck == null) return;
-        else
-        {
-            _puck.GetComponent<DelayTime>().StartThrow();
-            _matchStarted = true;
-        }
-    }
 
     //actions that happen when somebody wins!
-    #region WinActionsRegion
+    #region Win Methods
     private void SpawnWinParticles()
     {
         if(_winParticles != null)
@@ -146,6 +143,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region Puck Methods
     //private void ResetPuck()
     //{
     //    if (_puck != null)
@@ -157,11 +155,35 @@ public class GameManager : MonoBehaviour
     //        _puck.GetComponent<Rigidbody>().velocity = Vector3.zero;
     //    }
     //}
+    private void ThrowPuck()
+    {
+        if (_puck == null) return;
+        if (!PhotonNetwork.IsMasterClient) return;
+ 
+        _puck.GetComponent<DelayTime>().StartThrow();
+        _matchStarted = true;
+        
+    }
 
     private void DestroyPuck()
     {
         Destroy(_puck);
     }
+    #endregion
+
+    #region Inputs
+    private void InputContextReader(InputAction.CallbackContext context)
+    {
+        Debug.Log("Exited");
+        ExitToMenu();
+    }
+
+    private void ExitToMenu()
+    {
+        StartCoroutine(ExitSceneDelay(0.1f, "MenuScene"));
+    }
+
+    #endregion
 
     #region Coroutines
     IEnumerator ReloadScene(float seconds)
@@ -179,20 +201,24 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        _inputManager.UI.Exit.performed += InputContextReader;
         OnMatchStarted += ThrowPuck;
         OnScored += SpawnWinParticles;
         OnScored += PlayWinSound;
         OnScored += DestroyPuck;
         //OnScored += ResetPuck;
+        _inputManager.Enable();
     }
 
     private void OnDisable()
     {
+        _inputManager.UI.Exit.performed -= InputContextReader;
         OnMatchStarted -= ThrowPuck;
         OnScored -= SpawnWinParticles;
         OnScored -= PlayWinSound;
         OnScored -= DestroyPuck;
         //OnScored -= ResetPuck;
+        _inputManager.Disable();
     }
 
 }

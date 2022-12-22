@@ -559,11 +559,26 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5855569205500027059, guid: 4f88843df2cd42d4fa20d40649199876,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 55.89
+      objectReference: {fileID: 0}
     - target: {fileID: 5855569205500027069, guid: 4f88843df2cd42d4fa20d40649199876,
         type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 262297844}
+    - target: {fileID: 5855569205914556812, guid: 4f88843df2cd42d4fa20d40649199876,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 55.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855569205914556813, guid: 4f88843df2cd42d4fa20d40649199876,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5855569205914556814, guid: 4f88843df2cd42d4fa20d40649199876,
         type: 3}
       propertyPath: gameManager

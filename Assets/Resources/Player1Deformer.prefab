@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 7640239470799666874}
   - component: {fileID: 7640239470799666875}
   - component: {fileID: 7640239470799666872}
-  - component: {fileID: 7640239470799666873}
   - component: {fileID: 5937271026975236122}
   - component: {fileID: 7640239470799666876}
   - component: {fileID: 7640239470799666877}
   - component: {fileID: 1514398741259637894}
   - component: {fileID: 4372501219794422556}
   - component: {fileID: 3747598773247792754}
+  - component: {fileID: 8948010479310219176}
   m_Layer: 0
   m_Name: Player1Deformer
   m_TagString: Untagged
@@ -90,19 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7640239470799666873
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7640239470799666854}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5937271026975236122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +106,7 @@ MonoBehaviour:
     type: 3}
   pModelTransform: {fileID: 0}
   _perpendicularScaleKoefficient: 5
-  _parallelScaleKoefficient: 0
+  _parallelScaleKoefficient: 2
 --- !u!54 &7640239470799666876
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -201,7 +188,7 @@ ConfigurableJoint:
     maximumForce: 3.4028233e+38
   m_ZDrive:
     serializedVersion: 3
-    positionSpring: 1000
+    positionSpring: 500
     positionDamper: 0.5
     maximumForce: 3.4028233e+38
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -253,6 +240,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4372501219794422556}
+  - {fileID: 3747598773247792754}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -272,8 +260,8 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
+    InterpolateOption: 1
+    InterpolateMoveTowardsSpeed: 0.5
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
@@ -305,3 +293,17 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
+--- !u!136 &8948010479310219176
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7640239470799666854}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.53
+  m_Height: 1.02
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.27, z: 0}

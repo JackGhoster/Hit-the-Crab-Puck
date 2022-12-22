@@ -43,20 +43,28 @@ public abstract class AbstractDeformer : MonoBehaviour
     void Update()
     {
         Vector3 relativePosition = playerTransform.InverseTransformPoint(transform.position);
+        
         float interpolantPerpendicular = relativePosition.y * _perpendicularScaleKoefficient;
         float interpolantParallel = relativePosition.x * _parallelScaleKoefficient;
         
         Vector3 scalePerpendicularly = Lerp3(_scaleDownPerpendicularAxis, pModelTransform.localScale, _scaleUpPerpendicularAxis, interpolantPerpendicular);
-        //Debug.Log(scalePerpendicularly);
+       
         pModelTransform.localScale = scalePerpendicularly;
-
-        Vector3 scaleParallelary = Vector3.LerpUnclamped(pModelTransform.localScale, _scaleUpParallelAxis, interpolantParallel);
-        //Debug.Log(scaleParallelary);
-        pModelTransform.localScale = scaleParallelary;
+        //this is so the model won't continue to scale up whenever the player moves, these are the best settings I tried a bunch !
+        if(pModelTransform.localScale.x > 0.75f && pModelTransform.localScale.x < 1.1f)
+        {
+            Vector3 scaleParallelary = Vector3.LerpUnclamped(pModelTransform.localScale, _scaleUpParallelAxis, interpolantParallel);
+            pModelTransform.localScale = scaleParallelary;
+        }
+        else
+        {
+            Vector3 scaleParallelary = Vector3.LerpUnclamped(pModelTransform.localScale, Vector3.one, 1);
+            pModelTransform.localScale = scaleParallelary;
+        }
     }
 
     //it scales the object set in the inspector between the operands
-    //unlike the usual Lerp, it interpolates between 3 operands
+    //unlike the usual Lerp method, it interpolates between 3 states
     Vector3 Lerp3(Vector3 firstOperand, Vector3 secondOperand, Vector3 thirdOperand, float interpolationVariable)
     {
         float addent = 1f;
